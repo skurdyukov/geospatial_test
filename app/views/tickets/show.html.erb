@@ -1,0 +1,112 @@
+<h1>Ticket <%= @ticket.id %></h1>
+
+<div>
+  <table>
+    <tr>
+      <td>Request number</td>
+      <td><%= @ticket.request_number %></td>
+    </tr>
+
+    <tr>
+      <td>Request type</td>
+      <td><%= @ticket.request_type %></td>
+    </tr>
+
+    <tr>
+      <td>Request action</td>
+      <td><%= @ticket.request_action %></td>
+    </tr>
+
+    <tr>
+      <td>Response due date time</td>
+      <td><%= @ticket.response_due_date_time&.iso8601 %></td>
+    </tr>
+
+    <tr>
+      <td>Primary service area code</td>
+      <td><%= @ticket.primary_service_area_code %></td>
+    </tr>
+
+    <tr>
+      <td>Additional service area codes</td>
+      <td><%= @ticket.additional_service_area_codes %></td>
+    </tr>
+
+    <tr>
+      <td>Well known text shape</td>
+      <td><%= @ticket.well_known_text_shape %></td>
+    </tr>
+  </table>
+
+  <div id="ticket-coordinates" data-ticket-coordinates=<%= @coordinates %>></div>
+</div>
+
+<hr />
+
+<div id="map" style="width: 600px; height: 400px"></div>
+
+<hr />
+
+<div>
+  <h2>Excavators</h2>
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Company name</th>
+      <th>Full address</th>
+      <th>Crew on site</th>
+    </tr>
+
+    <% @ticket.excavators.each do |excavator| %>
+      <tr>
+        <td><%= excavator.id %></td>
+        <td><%= excavator.company_name %></td>
+        <td><%= excavator.full_address %></td>
+        <td><%= excavator.crew_on_site %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<style type="text/css">
+  table, th, tr, td {
+    border: 1px solid black;
+  }
+</style>
+
+<script type="text/javascript">
+  const ticketPolygonCoordinatesElement = document.getElementById("ticket-coordinates");
+  const ticketPolygonCoordinates = ticketPolygonCoordinatesElement.getAttribute("data-ticket-coordinates");
+  const parsedCoordinates = ticketPolygonCoordinates ? JSON.parse(ticketPolygonCoordinates) : [];
+
+  ymaps.ready(init);
+  function init(){
+    var myMap = new ymaps.Map("map", {
+      center: Array.isArray(parsedCoordinates) && parsedCoordinates[0] ? parsedCoordinates[0] : [55.75, 37.62],
+      zoom: 8
+    });
+
+    var myGeoObject = new ymaps.GeoObject({
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          parsedCoordinates
+        ],
+        fillRule: "nonZero"
+      },
+      properties:{
+        balloonContent: "Многоугольник"
+      }
+    },
+    {
+      fillColor: '#00FF00',
+      strokeColor: '#0000FF',
+      opacity: 0.5,
+      strokeWidth: 5,
+      strokeStyle: 'shortdash'
+    });
+
+    myMap.geoObjects.add(myGeoObject);
+  }
+</script>

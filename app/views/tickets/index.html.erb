@@ -1,0 +1,35 @@
+<h1>Tickets</h1>
+ 
+<table>
+  <tr>
+    <th>Request number</th>
+    <th>Request type</th>
+    <th>Request action</th>
+    <th>Response due date time</th>
+    <th>Primary service area code</th>
+    <th>Additional service area codes</th>
+    <th>Well known text shape</th>
+    <th></th>
+  </tr>
+ 
+<% @tickets.each do |ticket| %>
+  <tr>
+    <td><%= ticket.request_number %></td>
+    <td><%= ticket.request_type %></td>
+    <td><%= ticket.request_action %></td>
+    <td><%= ticket.response_due_date_time&.iso8601 %></td>
+    <td><%= ticket.primary_service_area_code %></td>
+    <td><%= ticket.additional_service_area_codes %></td>
+    <td><%= ticket.well_known_text_shape %></td>
+    <td><%= link_to 'Show', ticket %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<style>
+  table, th, tr, td {
+    border: 1px solid black;
+  }
+</style>
