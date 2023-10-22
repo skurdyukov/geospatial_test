@@ -17,6 +17,7 @@ gem 'pg', '~> 1.5.4'
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem 'hashie', '~> 5.0.0'
 gem 'dry-validation', '~> 1.10.0'
+gem 'blueprinter', '~> 0.30.0'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]

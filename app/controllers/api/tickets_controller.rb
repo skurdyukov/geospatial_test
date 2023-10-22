@@ -10,7 +10,8 @@ module Api
 
         head :created
       else
-        render json: { errors: validation_result.errors }, status: :unprocessable_entity
+        render json: Api::CreateTicketErrors.render(validation_result.errors.messages, root: :errors),
+               status: :unprocessable_entity
       end
     end
   end
