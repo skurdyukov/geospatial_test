@@ -7,6 +7,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: <%= ENV.fetch('DATABASE_HOST') { 'localhost' } %>
+  password: <%= ENV.fetch('DATABASE_PASSWORD') { 'password1' } %>
+  port: 5432
   username: geospatial_test
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
@@ -14,7 +17,6 @@ default: &default
 development:
   <<: *default
   database: geospatial_test_development
-  password: password1
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -22,9 +24,7 @@ development:
 test:
   <<: *default
   database: geospatial_test_test
-  password: password1
 
 production:
   <<: *default
-  database: geospatial_test_production
-  password: password1
+  database: <%= ENV.fetch('DATABASE_NAME') { 'geospatial_test_production' } %>
