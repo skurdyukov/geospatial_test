@@ -1,5 +1,7 @@
 module Api
   class TicketsController < ApplicationController
+    protect_from_forgery with: :null_session
+
     def create
       validation_result = TicketContract.new.call(params.permit!.to_h)
 
