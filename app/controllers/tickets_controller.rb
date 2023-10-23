@@ -10,6 +10,9 @@ class TicketsController < ApplicationController
 
   private
 
+  # FIXME: refactor to postgis extension
+  # https://github.com/rgeo/activerecord-postgis-adapter
+  # https://medium.com/biggerpockets-product-engineering/adding-postgis-support-to-rails-6-a56476f42486
   def normalize_coordinates(well_known_text_shape)
     normalizing_coords = well_known_text_shape.gsub("POLYGON((", "").gsub("))", "")
                                               .split(",")

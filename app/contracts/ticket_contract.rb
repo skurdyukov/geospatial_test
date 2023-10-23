@@ -34,5 +34,6 @@ class TicketContract < Dry::Validation::Contract
     end
   end
 
-  # TODO: add rule(:WellKnownText) https://dry-rb.org/gems/dry-validation/1.10/
+  # TODO: enable validation of ExcavationInfo.DigsiteInfo.WellKnownText
+  # adding rule(:WellKnownText) with regex https://dry-rb.org/gems/dry-validation/1.10/
 end
